@@ -1,0 +1,13 @@
+torch
+torchvision
+duckdb
+pandas
+numpy
+scikit-learn
+pillow
+timm>=0.9.16
+scipy
+matplotlib
+optuna
+albumentations
+

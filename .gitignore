@@ -1,0 +1,60 @@
+# ==============================================================================
+# GITIGNORE - SATRIA DATA 2026 TRASH CLASSIFIER PORTFOLIO
+# ==============================================================================
+
+# Python & Virtual Environments
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Datasets, Raw Images, and Media
+data/raw/
+data/train/
+data/test/
+data/clean_dataset*/
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.gif
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+
+# Model Weights, Tensors, and Caches
+*.pth
+*.pt
+*.bin
+*.onnx
+*.npy
+*.npz
+*.pkl
+*.joblib
+*.duckdb
+*.bak
+outputs/models/
+outputs/**/models/
+outputs/**/*.pth
+outputs/**/*.npy
+outputs/**/*.pkl
+outputs/**/*.duckdb
+outputs/**/*.zip
+
+# IDEs & System Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+.cache/
+.ipynb_checkpoints/
+
+# Keep directory structure
+!.gitkeep
