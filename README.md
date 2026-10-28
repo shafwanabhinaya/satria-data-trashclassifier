@@ -161,43 +161,7 @@ weighted avg   0.998628  0.998628  0.998628      1458
 
 ---
 
-## 🤖 Peran Claude: AI Pair Programmer & Research Engineer Partner
 
-Pengembangan proyek ini memanfaatkan kolaborasi erat dengan **Claude (Anthropic)** sebagai *AI Research Copilot* dan *Pair Programmer*. Pendekatan kolaborasi ini berfokus pada efisiensi riset, ketahanan arsitektur rekayasa perangkat lunak, dan integritas metodologis ilmiah.
-
-Berikut adalah kontribusi nyata Claude sepanjang siklus hidup proyek:
-
-### 1. Refaktorisasi Arsitektur OOP Modern (Production-Grade Codebase)
-* **Konteks Awal**: Eksperimen awal berjalan pada *Jupyter Notebook* monolitik yang panjang (`satria-data_v3.ipynb`), rawan *state leakage*, sulit di-maintain, dan lambat untuk pengujian parameter berulang.
-* **Peran Claude**: Merancang dan mengeksekusi refaktorisasi penuh ke dalam paket Python OOP modular [`src/trash_classifier/`](src/trash_classifier/):
-  - Memisahkan konfigurasi berbasis dataclass yang *type-safe* ([`config.py`](src/trash_classifier/config.py)).
-  - Mengisolasi logika data cataloging berbasis DuckDB ([`catalog.py`](src/trash_classifier/catalog.py)).
-  - Membangun *ModelFactory* yang terhubung dinamis ke pustaka `timm` dengan unfreezing layer bertingkat ([`models.py`](src/trash_classifier/models.py)).
-  - Menyusun loop pelatihan terisolasi dengan AMP, EMA, dan gradient clipping ([`trainer.py`](src/trash_classifier/trainer.py)).
-  - Merancang antarmuka CLI terpadu ([`main.py`](main.py)) yang mudah dieksekusi di terminal server remote.
-
-### 2. Forensik & Debugging Data (Data-Centric AI Troubleshooting)
-* **Konteks Awal**: Terjadi ketidaksesuaian tajam antar anggota tim saat menggabungkan hasil pembersihan data manual, yang berujung pada bentrok 2.017 label dan penurunan skor validasi.
-* **Peran Claude**: Melakukan audit forensik menyeluruh terhadap struktur direktori dan isi file CSV. Claude berhasil mendeteksi anomali kritis: salah satu anggota tim secara tidak sengaja memindahkan **2.481 citra organik (stroberi, daging, ayam, roti, jeruk)** ke folder `0_Recyclable` akibat kesalahan copy/merge. Claude merancang skrip *spot-check* visual dan formula rekonsiliasi yang membatalkan pemindahan salah tersebut tanpa merusak anotasi yang valid.
-* Claude juga merancang skrip pendeteksi duplikat byte-identik ([`scripts/dedupe_exact_duplicates.py`](scripts/dedupe_exact_duplicates.py)) yang memetakan 62 kelompok gambar duplikat dan mengisolasi konflik label secara transparan.
-
-### 3. Formulasi Algoritma & Desain Ensembling
-* **Peran Claude**: Merumuskan algoritma optimasi ambang batas (*threshold tuning*) menggunakan metode **Nelder-Mead Simplex** pada log-probabilitas validasi OOF. Claude memastikan proses pencarian parameter $M^*$ dilakukan murni pada data latih, mencegah terjadinya *test set leakage* yang dapat menyebabkan diskualifikasi kompetisi.
-* Claude juga mengusulkan integrasi **Multi-Flip Test-Time Augmentation (TTA)** dan pembobotan *Weighted Soft Voting* terkalibrasi untuk memitigasi varians prediksi pada citra sampah yang terdistorsi atau terpotong.
-
-### 4. Hardware-Aware Engineering & Ketahanan Sistem (Fault-Tolerant Resilience)
-* **Konteks Awal**: Pelatihan dilakukan di PC lab kampus dengan waktu akses terbatas dan risiko pemadaman listrik atau *out-of-memory* GPU RTX 3060 (12GB).
-* **Peran Claude**: Merancang mekanisme *Bulletproof Cache-Resume*:
-  - Probabilitas OOF dan pengujian per model otomatis disimpan ke file binary `.npy`.
-  - Jika eksekusi terhenti, pipeline memuat kembali cache yang sudah selesai dan langsung melanjutkan ke model berikutnya dalam hitungan detik.
-  - Mengonfigurasi parameter PyTorch DataLoader (`num_workers=8`, `pin_memory=True`, expandable CUDA memory segments) untuk memaksimalkan throughput CPU Intel Core i9-13900F.
-  - Menyelesaikan isu batasan Windows `MAX_PATH` (>259 karakter) pada sistem operasi Windows NTFS yang kerap memutus pembacaan berkas gambar.
-
-### 5. Dokumentasi Ilmiah "Reasoning-First" & Kepatuhan Juknis
-* **Peran Claude**: Mempertahankan filosofi pencatatan *reasoning-first* ("kenapa, bukan cuma apa") di [`docs/DATA_AUDIT_LOG.md`](docs/DATA_AUDIT_LOG.md). Setiap hipotesis eksperimen (termasuk eksperimen yang gagal seperti *rank averaging* atau *harmonic mean blending*) dicatat alasannya secara komprehensif.
-* Claude juga membantu menyusun naskah pembelaan saintifik dan panduan verifikasi juri kompetisi ([`docs/MODEL_BENCHMARK.md`](docs/MODEL_BENCHMARK.md)), membuktikan bahwa seluruh perolehan skor tinggi dicapai murni melalui generalisasi model dan data cleaning yang sah.
-
----
 
 ## 📁 Struktur Repositori (Repository Structure)
 
